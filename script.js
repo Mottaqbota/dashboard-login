@@ -11,6 +11,10 @@ let newArrayLogin = JSON.parse(localStorage.getItem('login'));
 function login() {
     // localStorage.setItem('isAuth', true);
     console.log(newArrayLogin);
+    if (newArrayLogin.length === 0) {
+        alert('Nenhum login registrado!')
+        return;
+    }
     newArrayLogin.forEach(item => {
         if (inputLogin.value === item.login && inputPassword.value === item.password){
             alert('Logado com sucesso!');
@@ -19,6 +23,7 @@ function login() {
         }
         else {
             alert('Login não Encontrado!');
+            return;
         }
     })
 }
@@ -30,7 +35,7 @@ function register() {
         return;
     }
 
-    newArrayLogin.forEach(item => {
+    arrayLogin.forEach(item => {
         if (inputRegister.value = item.login) {
             alert('Usuário já cadastrado! Insira outro nome de login');
             return;
@@ -41,7 +46,7 @@ function register() {
     arrayLogin.push({   
         login: inputRegister.value,
         password: inputPass.value
-    });
+    },);
     let newLogin =  JSON.stringify(arrayLogin);
     localStorage.setItem('login', newLogin);
 
@@ -51,6 +56,7 @@ function register() {
     inputPass.value = '';
     console.log(newLogin);
     switchLogin();
+    location.reload()
 }
 
 function switchLogin() {
@@ -72,4 +78,4 @@ function switchLogin() {
 function exit() {
     containerDashboard.style.display = 'none';
     containerLogin.style.display = 'flex';
-}
+}   
