@@ -1,28 +1,75 @@
+const inputRegister = document.getElementById('input-register');
+const inputPass = document.getElementById('input-pass');
+const inputLogin = document.getElementById('input-login');
+const inputPassword = document.getElementById('input-password');
+
+const containerLogin = document.querySelector('.container-login');
+const containerDashboard = document.querySelector('.container-dashboard');
+
+
+let newArrayLogin = JSON.parse(localStorage.getItem('login'));
 function login() {
-    localStorage.setItem('isAuth', true);
-    let newLogin = JSON.parse.localStorage.getItem('login');
-
-    if (){
-
-    }
+    // localStorage.setItem('isAuth', true);
+    console.log(newArrayLogin);
+    newArrayLogin.forEach(item => {
+        if (inputLogin.value === item.login && inputPassword.value === item.password){
+            alert('Logado com sucesso!');
+            containerDashboard.style.display = 'flex';
+            containerLogin.style.display = 'none';
+        }
+        else {
+            alert('Login não Encontrado!');
+        }
+    })
 }
 
 var arrayLogin = []
 function register() {
-    const inputRegister = document.getElementById('input-register').value;
-    const inputPass = document.getElementById('input-pass').value;
-    
-    arrayLogin.push({
-        login: inputRegister,
-        password: inputPass
+    if (inputRegister.value == '' || inputPass.value == '') {
+        alert('Insira um Login e senha para cadastro!');
+        return;
+    }
+
+    newArrayLogin.forEach(item => {
+        if (inputRegister.value = item.login) {
+            alert('Usuário já cadastrado! Insira outro nome de login');
+            return;
+        }
     })
 
-    let newLogin =  JSON.stringify(arrayLogin);
 
-    console.log(newLogin)
+    arrayLogin.push({   
+        login: inputRegister.value,
+        password: inputPass.value
+    });
+    let newLogin =  JSON.stringify(arrayLogin);
     localStorage.setItem('login', newLogin);
 
-    alert(`Cadastro concluído com sucesso! Login: ${inputRegister} Senha: ${inputPass}`)
+    alert(`Cadastro concluído com sucesso! Login: ${inputRegister.value} Senha: ${inputPass.value}`);
+    
+    inputRegister.value = '';
+    inputPass.value = '';
+    console.log(newLogin);
+    switchLogin();
+}
 
+function switchLogin() {
+    const cardLogin = document.querySelector('.card-login');
+    const cardRegister = document.querySelector('.card-register');
+    
+    const computedStyleLogin = window.getComputedStyle(cardLogin);
+    const computedStyleRegister = window.getComputedStyle(cardRegister);
+    
+    if (computedStyleLogin.display === 'flex') {
+        cardLogin.style.display = 'none';
+        cardRegister.style.display = 'flex';
+    } else if (computedStyleRegister.display === 'flex') {
+        cardLogin.style.display = 'flex';
+        cardRegister.style.display = 'none';
+    }
+}
 
+function exit() {
+    containerDashboard.style.display = 'none';
+    containerLogin.style.display = 'flex';
 }
